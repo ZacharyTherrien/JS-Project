@@ -94,10 +94,9 @@ let creationState = CreationStates.SHAPE;
  *      - TELL USE FILL POWER HAS ENDED, DISPLAY HEALED HP TOO.
  * 
  *      Todo:
- *      - Re-engineer the create charcters and generate random characters methods
- *        in order to accomodate for the manual character creation.
- *      - Implement function to generate manual character creation.
- *      - Optimize the generate random chatacter funciton.
+ *      - Remove complete state.
+ *      - Add custom/non random stats to characters.
+ *      - Optimize the generate random chatacter function.
  *      - Weird attack and even death skipping can occur.
  * 
  */
@@ -273,9 +272,9 @@ function GenerateCustomCharacters(){    //When testing mode, choose enemy & play
             soundHit.play();
             choiceList.push(choiceCustom)   //Add current move to the stack of selected options.
             numAtkChosen++;                 //Update which move is being selected.
-            if(numAtkChosen >= NUM_MOVES)            //Check if all moves selected.
-                creationState = CreationStates.COMPLETE;    //If so, go to the completed section.
         }
+        if(numAtkChosen >= NUM_MOVES)            //Check if all moves selected.
+            creationState = CreationStates.COMPLETE;    //If so, go to the completed section.
     }
     if(creationState == CreationStates.COMPLETE){
         numAtkChosen = 0;           //Reset number of chosen moves for nexy player.
@@ -304,15 +303,13 @@ function GenerateCustomCharacters(){    //When testing mode, choose enemy & play
 }
 
 function CreateCustomCharacter(list){
-    console.log("MY LISTTTTTTTTTT:");
-    console.log(list);
     let playerMoves = [];
     let enemyMoves = [];
     let playerShape = list.shift();     //Extract player shape from list first.
     for(let i = 0; i < NUM_MOVES; i++){ //For the number of moves, add it to array of moves.
         playerMoves.push(AttackList[list.shift()]);
     }
-    console.log(playerMoves);
+    //console.log(playerMoves);
     let enemyShape = list.shift();        //Next will be enemy's shape, extract it.
     for(let i = 0; i < NUM_MOVES; i++){ //Get the remaining moves from the array.
         enemyMoves.push(AttackList[list.shift()]);
